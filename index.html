@@ -2,8 +2,8 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ArchIA 3D</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ArchIA 3D — V3</title>
 
 <style>
 *{
@@ -14,327 +14,359 @@
 
 body{
     font-family:Inter,Arial,sans-serif;
-    background:#101216;
+    background:#0d0f13;
     color:#fff;
     overflow:hidden;
 }
 
-.app{
-    display:flex;
-    height:100vh;
+button,input{
+    font:inherit;
 }
 
-/* MENU */
+.app{
+    height:100vh;
+    display:flex;
+}
+
+/* ================= SIDEBAR ================= */
+
 .sidebar{
-    width:250px;
-    background:#17191e;
+    width:245px;
+    background:#15171c;
     border-right:1px solid #292c33;
-    padding:22px 16px;
+    padding:20px 14px;
     display:flex;
     flex-direction:column;
+    z-index:20;
 }
 
 .logo{
-    font-size:24px;
-    font-weight:800;
-    margin-bottom:35px;
+    font-size:25px;
+    font-weight:900;
+    padding:5px 10px 28px;
 }
 
 .logo span{
-    color:#7c5cff;
+    color:#8061ff;
 }
 
-.menu-title{
-    color:#777d89;
-    font-size:12px;
+.section-title{
+    color:#737985;
+    font-size:11px;
     text-transform:uppercase;
-    margin:18px 10px 10px;
+    letter-spacing:1px;
+    padding:15px 10px 8px;
 }
 
 .menu button{
     width:100%;
     border:0;
     background:transparent;
-    color:#b9bec8;
-    padding:13px 12px;
-    margin-bottom:5px;
-    border-radius:10px;
+    color:#aeb3bd;
     text-align:left;
+    padding:12px;
+    border-radius:9px;
     cursor:pointer;
-    font-size:14px;
+    margin-bottom:3px;
 }
 
 .menu button:hover,
 .menu button.active{
-    background:#252832;
-    color:#fff;
+    background:#272a32;
+    color:white;
 }
 
-.ai-button{
+.ai{
     margin-top:auto;
+    padding:14px;
     border:0;
-    border-radius:13px;
-    padding:15px;
-    color:#fff;
-    font-weight:700;
+    border-radius:12px;
+    background:linear-gradient(135deg,#7657ff,#a269ff);
+    color:white;
+    font-weight:800;
     cursor:pointer;
-    background:linear-gradient(135deg,#7657ff,#a76cff);
+    box-shadow:0 10px 30px rgba(118,87,255,.2);
 }
 
-/* AREA CENTRAL */
+/* ================= MAIN ================= */
+
 .main{
     flex:1;
+    min-width:0;
     display:flex;
     flex-direction:column;
-    min-width:0;
 }
 
 .topbar{
-    height:70px;
+    height:68px;
+    background:#15171c;
     border-bottom:1px solid #292c33;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    padding:0 24px;
-}
-
-.project-name{
-    font-weight:700;
-}
-
-.top-actions{
-    display:flex;
-    gap:10px;
-}
-
-.top-actions button{
-    border:1px solid #30343d;
-    background:#1b1e24;
-    color:#ddd;
-    padding:9px 14px;
-    border-radius:9px;
-    cursor:pointer;
-}
-
-.top-actions .save{
-    background:#7657ff;
-    border-color:#7657ff;
-    color:white;
-}
-
-/* CANVAS */
-.workspace{
-    flex:1;
-    position:relative;
-    overflow:hidden;
-    background:
-        linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px),
-        #111318;
-    background-size:40px 40px;
-}
-
-.room{
-    position:absolute;
-    width:620px;
-    height:390px;
-    left:50%;
-    top:50%;
-    transform:translate(-50%,-45%) perspective(1000px) rotateX(55deg) rotateZ(-1deg);
-    background:#ddd;
-    border:8px solid #3c3f45;
-    box-shadow:0 30px 80px rgba(0,0,0,.5);
-}
-
-.room::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:
-      linear-gradient(90deg,transparent 49%,rgba(0,0,0,.06) 50%,transparent 51%),
-      linear-gradient(transparent 49%,rgba(0,0,0,.06) 50%,transparent 51%);
-    background-size:50px 50px;
-}
-
-.room-label{
-    position:absolute;
-    background:#7657ff;
-    color:#fff;
-    padding:6px 12px;
-    border-radius:7px;
-    font-size:12px;
-    font-weight:bold;
-    transform:translateZ(20px);
-}
-
-.sofa{
-    position:absolute;
-    width:150px;
-    height:65px;
-    left:55px;
-    top:55px;
-    background:#626874;
-    border-radius:12px;
-    box-shadow:0 8px 15px #999;
-}
-
-.table{
-    position:absolute;
-    width:100px;
-    height:100px;
-    border-radius:50%;
-    background:#a4774f;
-    left:260px;
-    top:130px;
-    box-shadow:0 8px 15px #999;
-}
-
-.bed{
-    position:absolute;
-    width:190px;
-    height:110px;
-    right:50px;
-    bottom:55px;
-    background:#e8e8ec;
-    border:5px solid #c7c7cd;
-    border-radius:8px;
-}
-
-.window{
-    position:absolute;
-    width:130px;
-    height:10px;
-    background:#55aee8;
-    top:-8px;
-    left:245px;
-}
-
-/* IA */
-.ai-panel{
-    position:absolute;
-    left:24px;
-    right:24px;
-    bottom:24px;
-    background:rgba(25,27,33,.95);
-    border:1px solid #343741;
-    border-radius:16px;
-    padding:15px;
-    display:flex;
-    gap:10px;
-    backdrop-filter:blur(15px);
-}
-
-.ai-panel input{
-    flex:1;
-    background:#111318;
-    border:1px solid #363943;
-    color:#fff;
-    border-radius:10px;
-    padding:13px;
-    outline:none;
-}
-
-.ai-panel button{
-    background:#7657ff;
-    color:white;
-    border:0;
-    border-radius:10px;
     padding:0 20px;
-    font-weight:bold;
-    cursor:pointer;
-}
-
-/* DIREITA */
-.properties{
-    width:280px;
-    background:#17191e;
-    border-left:1px solid #292c33;
-    padding:22px;
-}
-
-.properties h3{
-    margin-bottom:20px;
-}
-
-.property{
-    background:#1e2128;
-    padding:13px;
-    border-radius:10px;
-    margin-bottom:9px;
-}
-
-.property small{
-    display:block;
-    color:#7f8590;
-    margin-bottom:5px;
-}
-
-.property strong{
-    font-size:14px;
-}
-
-/* MODAL */
-.modal{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.65);
-    display:none;
-    align-items:center;
-    justify-content:center;
     z-index:10;
 }
 
+.project{
+    font-weight:700;
+}
+
+.actions{
+    display:flex;
+    gap:8px;
+}
+
+.actions button{
+    background:#1e2127;
+    border:1px solid #333740;
+    color:#ddd;
+    padding:9px 13px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.actions .save{
+    background:#7657ff;
+    border-color:#7657ff;
+    color:#fff;
+}
+
+/* ================= 3D ================= */
+
+#scene{
+    position:relative;
+    flex:1;
+    min-height:0;
+    overflow:hidden;
+    background:
+        radial-gradient(circle at center,#20242d 0,#101216 65%);
+}
+
+canvas{
+    display:block;
+    width:100%;
+    height:100%;
+}
+
+/* ================= CONTROLS ================= */
+
+.controls{
+    position:absolute;
+    left:18px;
+    bottom:18px;
+    display:flex;
+    gap:8px;
+    z-index:5;
+}
+
+.controls button{
+    border:1px solid #343841;
+    background:rgba(22,24,29,.92);
+    color:white;
+    padding:10px 13px;
+    border-radius:9px;
+    cursor:pointer;
+    backdrop-filter:blur(10px);
+}
+
+.controls button:hover{
+    background:#7657ff;
+}
+
+/* ================= RIGHT PANEL ================= */
+
+.properties{
+    width:270px;
+    background:#15171c;
+    border-left:1px solid #292c33;
+    padding:20px;
+    overflow:auto;
+}
+
+.properties h3{
+    margin-bottom:18px;
+}
+
+.card{
+    background:#1d2026;
+    border:1px solid #292d35;
+    border-radius:10px;
+    padding:12px;
+    margin-bottom:9px;
+}
+
+.card small{
+    display:block;
+    color:#777e8b;
+    margin-bottom:5px;
+}
+
+.card strong{
+    font-size:14px;
+}
+
+.measure{
+    display:flex;
+    justify-content:space-between;
+}
+
+/* ================= IA ================= */
+
+.ai-bar{
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+    bottom:18px;
+    width:min(650px,calc(100% - 40px));
+    display:flex;
+    gap:8px;
+    padding:8px;
+    background:rgba(20,22,27,.94);
+    border:1px solid #383c47;
+    border-radius:14px;
+    backdrop-filter:blur(15px);
+    z-index:6;
+}
+
+.ai-bar input{
+    flex:1;
+    min-width:0;
+    background:#0e1014;
+    border:1px solid #30343d;
+    color:white;
+    outline:none;
+    padding:12px;
+    border-radius:9px;
+}
+
+.ai-bar button{
+    border:0;
+    background:#7657ff;
+    color:white;
+    padding:0 18px;
+    border-radius:9px;
+    font-weight:800;
+    cursor:pointer;
+}
+
+/* ================= MODAL ================= */
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.7);
+    z-index:100;
+    align-items:center;
+    justify-content:center;
+}
+
+.modal.show{
+    display:flex;
+}
+
 .modal-box{
-    width:min(520px,90%);
-    background:#191b20;
-    border:1px solid #343741;
+    width:min(560px,92%);
+    background:#181a20;
+    border:1px solid #353944;
     border-radius:18px;
-    padding:25px;
+    padding:24px;
+    box-shadow:0 30px 100px rgba(0,0,0,.6);
 }
 
 .modal-box h2{
-    margin-bottom:10px;
+    margin-bottom:8px;
 }
 
 .modal-box p{
-    color:#969ba6;
-    margin-bottom:20px;
+    color:#858b97;
+    margin-bottom:18px;
 }
 
-.modal-box textarea{
+textarea{
     width:100%;
-    height:120px;
+    height:130px;
     resize:none;
-    background:#101216;
+    background:#0d0f13;
+    border:1px solid #343841;
     color:#fff;
-    border:1px solid #363943;
     border-radius:10px;
     padding:13px;
     outline:none;
 }
 
-.modal-actions{
+.modal-buttons{
     display:flex;
     justify-content:flex-end;
-    gap:10px;
-    margin-top:15px;
+    gap:8px;
+    margin-top:14px;
 }
 
-.modal-actions button{
+.modal-buttons button{
     border:0;
     border-radius:9px;
-    padding:11px 18px;
+    padding:11px 16px;
     cursor:pointer;
 }
 
 .cancel{
     background:#292c33;
-    color:#fff;
+    color:white;
 }
 
 .generate{
     background:#7657ff;
-    color:#fff;
+    color:white;
+    font-weight:700;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+    .sidebar{
+        width:70px;
+        padding:15px 8px;
+    }
+
+    .logo{
+        font-size:0;
+        text-align:center;
+    }
+
+    .logo span{
+        font-size:22px;
+    }
+
+    .section-title{
+        display:none;
+    }
+
+    .menu button{
+        font-size:0;
+        text-align:center;
+    }
+
+    .menu button:first-letter{
+        font-size:18px;
+    }
+
+    .ai{
+        font-size:0;
+    }
+
+    .ai:first-letter{
+        font-size:20px;
+    }
+
+    .properties{
+        display:none;
+    }
+
+    .project{
+        font-size:13px;
+    }
 }
 </style>
 </head>
@@ -343,80 +375,107 @@ body{
 
 <div class="app">
 
+    <!-- MENU -->
+
     <aside class="sidebar">
 
         <div class="logo">
-            Arch<span>IA</span> 3D
+            Arch<span>IA</span>
         </div>
 
-        <div class="menu-title">Projeto</div>
+        <div class="section-title">Projeto</div>
 
         <div class="menu">
+
             <button class="active">🏠 Projeto</button>
             <button>📐 Planta</button>
-            <button>🧱 Construção</button>
+            <button>🧱 Paredes</button>
+            <button>🚪 Portas</button>
+            <button>🪟 Janelas</button>
             <button>🛋️ Móveis</button>
-            <button>🎨 Materiais</button>
+
         </div>
 
-        <div class="menu-title">Visualização</div>
+        <div class="section-title">Visualização</div>
 
         <div class="menu">
-            <button onclick="view2D()">▦ Visualização 2D</button>
-            <button onclick="view3D()">◇ Visualização 3D</button>
+
+            <button onclick="cameraTop()">▦ Planta</button>
+            <button onclick="camera3D()">◇ 3D</button>
+            <button onclick="resetCamera()">⟳ Resetar</button>
+
         </div>
 
-        <button class="ai-button" onclick="openAI()">
+        <button class="ai" onclick="openAI()">
             ✨ Criar com IA
         </button>
 
     </aside>
 
+
+    <!-- MAIN -->
+
     <main class="main">
 
         <header class="topbar">
 
-            <div class="project-name">
-                Minha Casa • Projeto 01
+            <div class="project">
+                🏠 Minha Casa — Projeto 01
             </div>
 
-            <div class="top-actions">
-                <button>↶</button>
-                <button>↷</button>
+            <div class="actions">
+
+                <button onclick="undo()">↶</button>
+
+                <button onclick="redo()">↷</button>
+
                 <button class="save" onclick="saveProject()">
-                    Salvar projeto
+                    Salvar
                 </button>
+
             </div>
 
         </header>
 
-        <section class="workspace" id="workspace">
 
-            <div class="room" id="room">
+        <!-- 3D -->
 
-                <div class="room-label">
-                    Sala
-                </div>
+        <section id="scene">
 
-                <div class="sofa"></div>
+            <div class="controls">
 
-                <div class="table"></div>
+                <button onclick="addRoom()">
+                    ＋ Ambiente
+                </button>
 
-                <div class="bed"></div>
+                <button onclick="addWall()">
+                    🧱 Parede
+                </button>
 
-                <div class="window"></div>
+                <button onclick="addDoor()">
+                    🚪 Porta
+                </button>
+
+                <button onclick="addWindow()">
+                    🪟 Janela
+                </button>
+
+                <button onclick="addFurniture()">
+                    🛋️ Móvel
+                </button>
 
             </div>
 
-            <div class="ai-panel">
+
+            <div class="ai-bar">
 
                 <input
-                    id="prompt"
-                    placeholder="Ex: crie uma casa com 3 quartos, 2 banheiros e garagem..."
+                    id="quickPrompt"
+                    placeholder="Ex: casa moderna com 3 quartos, suíte e garagem..."
                 >
 
-                <button onclick="generateAI()">
-                    ✨ Gerar
+                <button onclick="quickAI()">
+                    ✨ IA
                 </button>
 
             </div>
@@ -425,38 +484,67 @@ body{
 
     </main>
 
+
+    <!-- PROPERTIES -->
+
     <aside class="properties">
 
         <h3>Propriedades</h3>
 
-        <div class="property">
-            <small>Ambiente selecionado</small>
-            <strong>Sala</strong>
+        <div class="card">
+
+            <small>Objeto selecionado</small>
+
+            <strong id="selectedName">
+                Casa
+            </strong>
+
         </div>
 
-        <div class="property">
-            <small>Largura</small>
-            <strong>6,20 m</strong>
+        <div class="card measure">
+
+            <span>
+                <small>Largura</small>
+                <strong id="widthValue">12 m</strong>
+            </span>
+
+            <span>
+                <small>Profundidade</small>
+                <strong id="depthValue">8 m</strong>
+            </span>
+
         </div>
 
-        <div class="property">
-            <small>Comprimento</small>
-            <strong>3,90 m</strong>
+        <div class="card">
+
+            <small>Altura das paredes</small>
+
+            <strong>2,80 m</strong>
+
         </div>
 
-        <div class="property">
-            <small>Área</small>
-            <strong>24,18 m²</strong>
+        <div class="card">
+
+            <small>Área construída</small>
+
+            <strong id="areaValue">96 m²</strong>
+
         </div>
 
-        <div class="property">
-            <small>Tipo</small>
+        <div class="card">
+
+            <small>Projeto</small>
+
             <strong>Residencial</strong>
+
         </div>
 
-        <div class="property">
-            <small>Modo</small>
-            <strong>Projeto 3D</strong>
+        <div class="card">
+
+            <small>Motor</small>
+
+            <strong>ArchIA 3D Engine</strong>
+
         </div>
 
     </aside>
@@ -464,26 +552,31 @@ body{
 </div>
 
 
+<!-- MODAL IA -->
+
 <div class="modal" id="aiModal">
 
     <div class="modal-box">
 
-        <h2>✨ Criar arquitetura com IA</h2>
+        <h2>✨ Criar projeto com IA</h2>
 
         <p>
-            Descreva a casa que você deseja e a IA irá preparar a estrutura do projeto.
+            Descreva a casa que você deseja. O ArchIA irá interpretar
+            o pedido e preparar a arquitetura.
         </p>
 
-        <textarea id="aiText"
-        placeholder="Ex: Quero uma casa moderna com 3 quartos, suíte, sala integrada com cozinha, 2 banheiros, lavanderia e garagem para 2 carros."></textarea>
+        <textarea
+            id="aiDescription"
+            placeholder="Ex: Quero uma casa moderna de 120 m², com 3 quartos, uma suíte, sala integrada com cozinha, 2 banheiros, lavanderia e garagem para 2 carros."
+        ></textarea>
 
-        <div class="modal-actions">
+        <div class="modal-buttons">
 
             <button class="cancel" onclick="closeAI()">
                 Cancelar
             </button>
 
-            <button class="generate" onclick="generateFromModal()">
+            <button class="generate" onclick="generateAI()">
                 Criar projeto
             </button>
 
@@ -494,76 +587,979 @@ body{
 </div>
 
 
+<!-- THREE.JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/js/controls/OrbitControls.js"></script>
+
+
 <script>
 
-function openAI(){
-    document.getElementById("aiModal").style.display="flex";
+/* ==========================================
+   ARCHIA 3D ENGINE
+========================================== */
+
+let scene;
+let camera;
+let renderer;
+let controls;
+
+let objects = [];
+
+let selectedObject = null;
+
+const container = document.getElementById("scene");
+
+
+/* ==========================================
+   INICIAR
+========================================== */
+
+function init(){
+
+    scene = new THREE.Scene();
+
+    scene.background = new THREE.Color(0x101216);
+
+
+    /* CÂMERA */
+
+    camera = new THREE.PerspectiveCamera(
+        50,
+        container.clientWidth / container.clientHeight,
+        0.1,
+        1000
+    );
+
+    camera.position.set(
+        14,
+        13,
+        16
+    );
+
+
+    /* RENDER */
+
+    renderer = new THREE.WebGLRenderer({
+        antialias:true
+    });
+
+    renderer.setPixelRatio(
+        Math.min(window.devicePixelRatio,2)
+    );
+
+    renderer.setSize(
+        container.clientWidth,
+        container.clientHeight
+    );
+
+    renderer.shadowMap.enabled=true;
+
+    container.appendChild(renderer.domElement);
+
+
+    /* CONTROLES */
+
+    controls = new THREE.OrbitControls(
+        camera,
+        renderer.domElement
+    );
+
+    controls.enableDamping=true;
+
+    controls.dampingFactor=.08;
+
+    controls.minDistance=5;
+
+    controls.maxDistance=50;
+
+    controls.target.set(0,0,0);
+
+
+    /* LUZ */
+
+    const ambient =
+        new THREE.HemisphereLight(
+            0xffffff,
+            0x222222,
+            2
+        );
+
+    scene.add(ambient);
+
+
+    const light =
+        new THREE.DirectionalLight(
+            0xffffff,
+            3
+        );
+
+    light.position.set(
+        8,
+        18,
+        10
+    );
+
+    light.castShadow=true;
+
+    scene.add(light);
+
+
+    /* CHÃO */
+
+    createFloor();
+
+
+    /* CASA */
+
+    createHouse();
+
+
+    /* GRID */
+
+    const grid =
+        new THREE.GridHelper(
+            40,
+            40,
+            0x555555,
+            0x252830
+        );
+
+    grid.position.y=.01;
+
+    scene.add(grid);
+
+
+    window.addEventListener(
+        "resize",
+        resize
+    );
+
+
+    renderer.domElement.addEventListener(
+        "click",
+        selectObject
+    );
+
+
+    animate();
 }
+
+
+/* ==========================================
+   CHÃO
+========================================== */
+
+function createFloor(){
+
+    const geometry =
+        new THREE.BoxGeometry(
+            12,
+            .15,
+            8
+        );
+
+    const material =
+        new THREE.MeshStandardMaterial({
+            color:0xdddddd
+        });
+
+    const floor =
+        new THREE.Mesh(
+            geometry,
+            material
+        );
+
+    floor.position.y=-.08;
+
+    floor.receiveShadow=true;
+
+    scene.add(floor);
+}
+
+
+/* ==========================================
+   PAREDE
+========================================== */
+
+function createWall(
+    x,
+    y,
+    z,
+    width,
+    height,
+    depth,
+    rotation=0
+){
+
+    const geometry =
+        new THREE.BoxGeometry(
+            width,
+            height,
+            depth
+        );
+
+    const material =
+        new THREE.MeshStandardMaterial({
+            color:0xe5e5e5
+        });
+
+    const wall =
+        new THREE.Mesh(
+            geometry,
+            material
+        );
+
+    wall.position.set(
+        x,
+        y + height/2,
+        z
+    );
+
+    wall.rotation.y=rotation;
+
+    wall.castShadow=true;
+
+    wall.receiveShadow=true;
+
+    wall.userData.type="Parede";
+
+    scene.add(wall);
+
+    objects.push(wall);
+
+    return wall;
+}
+
+
+/* ==========================================
+   CASA
+========================================== */
+
+function createHouse(){
+
+    const h=2.8;
+
+    createWall(
+        0,
+        0,
+        -4,
+        12,
+        h,
+        .25
+    );
+
+    createWall(
+        0,
+        0,
+        4,
+        12,
+        h,
+        .25
+    );
+
+    createWall(
+        -6,
+        0,
+        0,
+        8,
+        h,
+        .25,
+        Math.PI/2
+    );
+
+    createWall(
+        6,
+        0,
+        0,
+        8,
+        h,
+        .25,
+        Math.PI/2
+    );
+
+
+    /* DIVISÃO INTERNA */
+
+    createWall(
+        0,
+        0,
+        0,
+        8,
+        h,
+        .18
+    );
+
+    createWall(
+        3,
+        0,
+        -2,
+        4,
+        h,
+        .18,
+        Math.PI/2
+    );
+
+
+    /* SALA */
+
+    createFurnitureObject(
+        -3,
+        .45,
+        -2.4,
+        3,
+        .7,
+        1,
+        0x555c68
+    );
+
+
+    /* MESA */
+
+    createTable(
+        -2,
+        0,
+        1.8
+    );
+
+
+    /* CAMA */
+
+    createBed(
+        3.5,
+        0,
+        1.8
+    );
+
+
+    /* PORTA */
+
+    createDoor(
+        0,
+        0,
+        -4.12
+    );
+
+
+    /* JANELA */
+
+    createWindow(
+        -3,
+        1.6,
+        -4.13
+    );
+}
+
+
+/* ==========================================
+   MÓVEL
+========================================== */
+
+function createFurnitureObject(
+    x,
+    y,
+    z,
+    w,
+    h,
+    d,
+    color
+){
+
+    const geometry =
+        new THREE.BoxGeometry(
+            w,
+            h,
+            d
+        );
+
+    const material =
+        new THREE.MeshStandardMaterial({
+            color:color
+        });
+
+    const obj =
+        new THREE.Mesh(
+            geometry,
+            material
+        );
+
+    obj.position.set(
+        x,
+        y,
+        z
+    );
+
+    obj.castShadow=true;
+
+    obj.userData.type="Móvel";
+
+    scene.add(obj);
+
+    objects.push(obj);
+
+    return obj;
+}
+
+
+/* ==========================================
+   MESA
+========================================== */
+
+function createTable(
+    x,
+    y,
+    z
+){
+
+    const table =
+        createFurnitureObject(
+            x,
+            1,
+            z,
+            1.5,
+            .15,
+            1.5,
+            0x9b704b
+        );
+
+    for(
+        let i=0;
+        i<4;
+        i++
+    ){
+
+        const lx =
+            i<2 ? -.55 : .55;
+
+        const lz =
+            i%2===0 ? -.55 : .55;
+
+        createFurnitureObject(
+            x+lx,
+            .5,
+            z+lz,
+            .12,
+            1,
+            .12,
+            0x65452e
+        );
+    }
+}
+
+
+/* ==========================================
+   CAMA
+========================================== */
+
+function createBed(
+    x,
+    y,
+    z
+){
+
+    createFurnitureObject(
+        x,
+        .45,
+        z,
+        2.2,
+        .5,
+        1.7,
+        0xe6e6e9
+    );
+
+    createFurnitureObject(
+        x,
+        .8,
+        z-.65,
+        2.2,
+        .3,
+        .25,
+        0xbfc2c9
+    );
+}
+
+
+/* ==========================================
+   PORTA
+========================================== */
+
+function createDoor(
+    x,
+    y,
+    z
+){
+
+    const geometry =
+        new THREE.BoxGeometry(
+            1.1,
+            2.3,
+            .08
+        );
+
+    const material =
+        new THREE.MeshStandardMaterial({
+            color:0x704d31
+        });
+
+    const door =
+        new THREE.Mesh(
+            geometry,
+            material
+        );
+
+    door.position.set(
+        x,
+        1.15,
+        z
+    );
+
+    door.userData.type="Porta";
+
+    door.castShadow=true;
+
+    scene.add(door);
+
+    objects.push(door);
+}
+
+
+/* ==========================================
+   JANELA
+========================================== */
+
+function createWindow(
+    x,
+    y,
+    z
+){
+
+    const geometry =
+        new THREE.BoxGeometry(
+            2,
+            1.2,
+            .08
+        );
+
+    const material =
+        new THREE.MeshStandardMaterial({
+            color:0x55b9e9,
+            transparent:true,
+            opacity:.7
+        });
+
+    const win =
+        new THREE.Mesh(
+            geometry,
+            material
+        );
+
+    win.position.set(
+        x,
+        y,
+        z
+    );
+
+    win.userData.type="Janela";
+
+    scene.add(win);
+
+    objects.push(win);
+}
+
+
+/* ==========================================
+   BOTÕES
+========================================== */
+
+function addRoom(){
+
+    const wall =
+        createWall(
+            0,
+            0,
+            1,
+            5,
+            2.8,
+            .2
+        );
+
+    select(wall);
+}
+
+
+function addWall(){
+
+    const wall =
+        createWall(
+            0,
+            0,
+            2,
+            5,
+            2.8,
+            .2
+        );
+
+    select(wall);
+}
+
+
+function addDoor(){
+
+    const door =
+        createDoor(
+            0,
+            0,
+            -4.13
+        );
+
+    select(
+        objects[objects.length-1]
+    );
+}
+
+
+function addWindow(){
+
+    createWindow(
+        2,
+        1.5,
+        -4.13
+    );
+
+    select(
+        objects[objects.length-1]
+    );
+}
+
+
+function addFurniture(){
+
+    const obj =
+        createFurnitureObject(
+            1,
+            .5,
+            1,
+            1.5,
+            1,
+            1,
+            0x59606c
+        );
+
+    select(obj);
+}
+
+
+/* ==========================================
+   SELEÇÃO
+========================================== */
+
+function selectObject(event){
+
+    const rect =
+        renderer.domElement.getBoundingClientRect();
+
+    const mouse =
+        new THREE.Vector2();
+
+    mouse.x =
+        ((event.clientX-rect.left) /
+        rect.width)*2-1;
+
+    mouse.y =
+        -((event.clientY-rect.top) /
+        rect.height)*2+1;
+
+    const raycaster =
+        new THREE.Raycaster();
+
+    raycaster.setFromCamera(
+        mouse,
+        camera
+    );
+
+    const hits =
+        raycaster.intersectObjects(
+            objects
+        );
+
+    if(hits.length){
+
+        select(
+            hits[0].object
+        );
+    }
+}
+
+
+function select(obj){
+
+    selectedObject=obj;
+
+    document.getElementById(
+        "selectedName"
+    ).textContent =
+        obj.userData.type || "Objeto";
+
+    if(
+        obj.geometry &&
+        obj.geometry.parameters
+    ){
+
+        const p =
+            obj.geometry.parameters;
+
+        if(p.width){
+
+            document.getElementById(
+                "widthValue"
+            ).textContent =
+                p.width.toFixed(2)+" m";
+        }
+
+        if(p.depth){
+
+            document.getElementById(
+                "depthValue"
+            ).textContent =
+                p.depth.toFixed(2)+" m";
+        }
+    }
+}
+
+
+/* ==========================================
+   CÂMERA
+========================================== */
+
+function camera3D(){
+
+    camera.position.set(
+        14,
+        13,
+        16
+    );
+
+    controls.target.set(
+        0,
+        0,
+        0
+    );
+
+    controls.update();
+}
+
+
+function cameraTop(){
+
+    camera.position.set(
+        0,
+        25,
+        0
+    );
+
+    controls.target.set(
+        0,
+        0,
+        0
+    );
+
+    controls.update();
+}
+
+
+function resetCamera(){
+
+    camera3D();
+}
+
+
+/* ==========================================
+   IA
+========================================== */
+
+function openAI(){
+
+    document
+        .getElementById("aiModal")
+        .classList.add("show");
+}
+
 
 function closeAI(){
-    document.getElementById("aiModal").style.display="none";
+
+    document
+        .getElementById("aiModal")
+        .classList.remove("show");
 }
 
-function generateFromModal(){
 
-    const text=document.getElementById("aiText").value;
+function quickAI(){
+
+    const text =
+        document.getElementById(
+            "quickPrompt"
+        ).value;
 
     if(!text.trim()){
-        alert("Descreva a casa primeiro.");
+
+        openAI();
+
+        return;
+    }
+
+    document.getElementById(
+        "aiDescription"
+    ).value=text;
+
+    generateAI();
+}
+
+
+function generateAI(){
+
+    const text =
+        document.getElementById(
+            "aiDescription"
+        ).value;
+
+    if(!text.trim()){
+
+        alert(
+            "Descreva a casa primeiro."
+        );
+
         return;
     }
 
     closeAI();
 
-    alert(
-        "IA recebeu seu projeto:\\n\\n"+
-        text+
-        "\\n\\nNa próxima etapa vamos conectar a IA real para gerar a planta automaticamente."
-    );
-}
+    /*
+       Nesta V3 o interpretador ainda é local.
+       Na próxima etapa conectaremos uma API
+       de IA para transformar a descrição em
+       planta automaticamente.
+    */
 
-function generateAI(){
+    const lower =
+        text.toLowerCase();
 
-    const text=document.getElementById("prompt").value;
+    if(
+        lower.includes("120") ||
+        lower.includes("3 quartos")
+    ){
 
-    if(!text.trim()){
-        openAI();
-        return;
+        alert(
+            "Projeto interpretado!\\n\\n"+
+            "🏠 Casa moderna\\n"+
+            "🛏️ 3 quartos\\n"+
+            "📐 Área aproximada: 120 m²\\n\\n"+
+            "Agora vamos transformar essa descrição em ambientes 3D automaticamente."
+        );
+
+    }else{
+
+        alert(
+            "A IA recebeu seu projeto:\\n\\n"+
+            text+
+            "\\n\\nO próximo módulo vai transformar o texto em uma planta 3D."
+        );
     }
-
-    document.getElementById("aiText").value=text;
-    generateFromModal();
 }
 
-function view2D(){
 
-    const room=document.getElementById("room");
-
-    room.style.transform=
-        "translate(-50%,-45%)";
-
-    room.style.boxShadow="0 15px 40px rgba(0,0,0,.4)";
-}
-
-function view3D(){
-
-    const room=document.getElementById("room");
-
-    room.style.transform=
-        "translate(-50%,-45%) perspective(1000px) rotateX(55deg) rotateZ(-1deg)";
-
-    room.style.boxShadow="0 30px 80px rgba(0,0,0,.5)";
-}
+/* ==========================================
+   SALVAR
+========================================== */
 
 function saveProject(){
 
+    const project={
+
+        name:
+            "Minha Casa — Projeto 01",
+
+        objects:
+            objects.map(
+                o=>({
+                    type:o.userData.type,
+                    x:o.position.x,
+                    y:o.position.y,
+                    z:o.position.z
+                })
+            ),
+
+        savedAt:
+            new Date().toISOString()
+
+    };
+
     localStorage.setItem(
-        "archia_project",
-        document.getElementById("workspace").innerHTML
+        "archia3d_project",
+        JSON.stringify(project)
     );
 
-    alert("Projeto salvo neste dispositivo.");
+    alert(
+        "✅ Projeto salvo neste dispositivo."
+    );
 }
+
+
+function undo(){
+
+    alert(
+        "Desfazer ficará disponível no histórico da V4."
+    );
+}
+
+
+function redo(){
+
+    alert(
+        "Refazer ficará disponível no histórico da V4."
+    );
+}
+
+
+/* ==========================================
+   RESIZE
+========================================== */
+
+function resize(){
+
+    camera.aspect =
+        container.clientWidth /
+        container.clientHeight;
+
+    camera.updateProjectionMatrix();
+
+    renderer.setSize(
+        container.clientWidth,
+        container.clientHeight
+    );
+}
+
+
+/* ==========================================
+   LOOP
+========================================== */
+
+function animate(){
+
+    requestAnimationFrame(
+        animate
+    );
+
+    controls.update();
+
+    renderer.render(
+        scene,
+        camera
+    );
+}
+
+
+init();
 
 </script>
 
