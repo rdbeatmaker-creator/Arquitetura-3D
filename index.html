@@ -1,167 +1,570 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ArchIA 3D</title>
 
-  <title>ARQ IA 3D</title>
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
 
-  <link rel="stylesheet" href="style.css">
+body{
+    font-family:Inter,Arial,sans-serif;
+    background:#101216;
+    color:#fff;
+    overflow:hidden;
+}
+
+.app{
+    display:flex;
+    height:100vh;
+}
+
+/* MENU */
+.sidebar{
+    width:250px;
+    background:#17191e;
+    border-right:1px solid #292c33;
+    padding:22px 16px;
+    display:flex;
+    flex-direction:column;
+}
+
+.logo{
+    font-size:24px;
+    font-weight:800;
+    margin-bottom:35px;
+}
+
+.logo span{
+    color:#7c5cff;
+}
+
+.menu-title{
+    color:#777d89;
+    font-size:12px;
+    text-transform:uppercase;
+    margin:18px 10px 10px;
+}
+
+.menu button{
+    width:100%;
+    border:0;
+    background:transparent;
+    color:#b9bec8;
+    padding:13px 12px;
+    margin-bottom:5px;
+    border-radius:10px;
+    text-align:left;
+    cursor:pointer;
+    font-size:14px;
+}
+
+.menu button:hover,
+.menu button.active{
+    background:#252832;
+    color:#fff;
+}
+
+.ai-button{
+    margin-top:auto;
+    border:0;
+    border-radius:13px;
+    padding:15px;
+    color:#fff;
+    font-weight:700;
+    cursor:pointer;
+    background:linear-gradient(135deg,#7657ff,#a76cff);
+}
+
+/* AREA CENTRAL */
+.main{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    min-width:0;
+}
+
+.topbar{
+    height:70px;
+    border-bottom:1px solid #292c33;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 24px;
+}
+
+.project-name{
+    font-weight:700;
+}
+
+.top-actions{
+    display:flex;
+    gap:10px;
+}
+
+.top-actions button{
+    border:1px solid #30343d;
+    background:#1b1e24;
+    color:#ddd;
+    padding:9px 14px;
+    border-radius:9px;
+    cursor:pointer;
+}
+
+.top-actions .save{
+    background:#7657ff;
+    border-color:#7657ff;
+    color:white;
+}
+
+/* CANVAS */
+.workspace{
+    flex:1;
+    position:relative;
+    overflow:hidden;
+    background:
+        linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px),
+        #111318;
+    background-size:40px 40px;
+}
+
+.room{
+    position:absolute;
+    width:620px;
+    height:390px;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-45%) perspective(1000px) rotateX(55deg) rotateZ(-1deg);
+    background:#ddd;
+    border:8px solid #3c3f45;
+    box-shadow:0 30px 80px rgba(0,0,0,.5);
+}
+
+.room::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+      linear-gradient(90deg,transparent 49%,rgba(0,0,0,.06) 50%,transparent 51%),
+      linear-gradient(transparent 49%,rgba(0,0,0,.06) 50%,transparent 51%);
+    background-size:50px 50px;
+}
+
+.room-label{
+    position:absolute;
+    background:#7657ff;
+    color:#fff;
+    padding:6px 12px;
+    border-radius:7px;
+    font-size:12px;
+    font-weight:bold;
+    transform:translateZ(20px);
+}
+
+.sofa{
+    position:absolute;
+    width:150px;
+    height:65px;
+    left:55px;
+    top:55px;
+    background:#626874;
+    border-radius:12px;
+    box-shadow:0 8px 15px #999;
+}
+
+.table{
+    position:absolute;
+    width:100px;
+    height:100px;
+    border-radius:50%;
+    background:#a4774f;
+    left:260px;
+    top:130px;
+    box-shadow:0 8px 15px #999;
+}
+
+.bed{
+    position:absolute;
+    width:190px;
+    height:110px;
+    right:50px;
+    bottom:55px;
+    background:#e8e8ec;
+    border:5px solid #c7c7cd;
+    border-radius:8px;
+}
+
+.window{
+    position:absolute;
+    width:130px;
+    height:10px;
+    background:#55aee8;
+    top:-8px;
+    left:245px;
+}
+
+/* IA */
+.ai-panel{
+    position:absolute;
+    left:24px;
+    right:24px;
+    bottom:24px;
+    background:rgba(25,27,33,.95);
+    border:1px solid #343741;
+    border-radius:16px;
+    padding:15px;
+    display:flex;
+    gap:10px;
+    backdrop-filter:blur(15px);
+}
+
+.ai-panel input{
+    flex:1;
+    background:#111318;
+    border:1px solid #363943;
+    color:#fff;
+    border-radius:10px;
+    padding:13px;
+    outline:none;
+}
+
+.ai-panel button{
+    background:#7657ff;
+    color:white;
+    border:0;
+    border-radius:10px;
+    padding:0 20px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* DIREITA */
+.properties{
+    width:280px;
+    background:#17191e;
+    border-left:1px solid #292c33;
+    padding:22px;
+}
+
+.properties h3{
+    margin-bottom:20px;
+}
+
+.property{
+    background:#1e2128;
+    padding:13px;
+    border-radius:10px;
+    margin-bottom:9px;
+}
+
+.property small{
+    display:block;
+    color:#7f8590;
+    margin-bottom:5px;
+}
+
+.property strong{
+    font-size:14px;
+}
+
+/* MODAL */
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.65);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:10;
+}
+
+.modal-box{
+    width:min(520px,90%);
+    background:#191b20;
+    border:1px solid #343741;
+    border-radius:18px;
+    padding:25px;
+}
+
+.modal-box h2{
+    margin-bottom:10px;
+}
+
+.modal-box p{
+    color:#969ba6;
+    margin-bottom:20px;
+}
+
+.modal-box textarea{
+    width:100%;
+    height:120px;
+    resize:none;
+    background:#101216;
+    color:#fff;
+    border:1px solid #363943;
+    border-radius:10px;
+    padding:13px;
+    outline:none;
+}
+
+.modal-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    margin-top:15px;
+}
+
+.modal-actions button{
+    border:0;
+    border-radius:9px;
+    padding:11px 18px;
+    cursor:pointer;
+}
+
+.cancel{
+    background:#292c33;
+    color:#fff;
+}
+
+.generate{
+    background:#7657ff;
+    color:#fff;
+}
+</style>
 </head>
 
 <body>
 
-<header>
-  <div class="logo">
-    ARQ<span>IA</span> 3D
-  </div>
+<div class="app">
 
-  <button id="camera">
-    🎥 Visão externa
-  </button>
-</header>
+    <aside class="sidebar">
 
+        <div class="logo">
+            Arch<span>IA</span> 3D
+        </div>
 
-<aside>
+        <div class="menu-title">Projeto</div>
 
-  <h1>Monte sua casa</h1>
+        <div class="menu">
+            <button class="active">🏠 Projeto</button>
+            <button>📐 Planta</button>
+            <button>🧱 Construção</button>
+            <button>🛋️ Móveis</button>
+            <button>🎨 Materiais</button>
+        </div>
 
-  <p>
-    Configure o terreno e gere uma proposta
-    de arquitetura em 3D.
-  </p>
+        <div class="menu-title">Visualização</div>
 
+        <div class="menu">
+            <button onclick="view2D()">▦ Visualização 2D</button>
+            <button onclick="view3D()">◇ Visualização 3D</button>
+        </div>
 
-  <label>
-    Largura do terreno (m)
+        <button class="ai-button" onclick="openAI()">
+            ✨ Criar com IA
+        </button>
 
-    <input
-      id="w"
-      type="number"
-      value="10"
-      min="4"
-      max="100"
-      step="0.5"
-    >
-  </label>
+    </aside>
 
+    <main class="main">
 
-  <label>
-    Comprimento do terreno (m)
+        <header class="topbar">
 
-    <input
-      id="d"
-      type="number"
-      value="20"
-      min="5"
-      max="100"
-      step="0.5"
-    >
-  </label>
+            <div class="project-name">
+                Minha Casa • Projeto 01
+            </div>
 
+            <div class="top-actions">
+                <button>↶</button>
+                <button>↷</button>
+                <button class="save" onclick="saveProject()">
+                    Salvar projeto
+                </button>
+            </div>
 
-  <label>
-    Quartos
+        </header>
 
-    <input
-      id="q"
-      type="number"
-      value="3"
-      min="1"
-      max="8"
-    >
-  </label>
+        <section class="workspace" id="workspace">
 
+            <div class="room" id="room">
 
-  <label>
-    Banheiros
+                <div class="room-label">
+                    Sala
+                </div>
 
-    <input
-      id="b"
-      type="number"
-      value="2"
-      min="1"
-      max="5"
-    >
-  </label>
+                <div class="sofa"></div>
 
+                <div class="table"></div>
 
-  <label>
-    Garagem
+                <div class="bed"></div>
 
-    <select id="g">
+                <div class="window"></div>
 
-      <option value="0">
-        Sem garagem
-      </option>
+            </div>
 
-      <option value="1" selected>
-        1 carro
-      </option>
+            <div class="ai-panel">
 
-      <option value="2">
-        2 carros
-      </option>
+                <input
+                    id="prompt"
+                    placeholder="Ex: crie uma casa com 3 quartos, 2 banheiros e garagem..."
+                >
 
-      <option value="3">
-        3 carros
-      </option>
+                <button onclick="generateAI()">
+                    ✨ Gerar
+                </button>
 
-    </select>
+            </div>
 
-  </label>
+        </section>
 
+    </main>
 
-  <label class="check">
-    <input
-      id="pool"
-      type="checkbox"
-    >
+    <aside class="properties">
 
-    Piscina
-  </label>
+        <h3>Propriedades</h3>
 
+        <div class="property">
+            <small>Ambiente selecionado</small>
+            <strong>Sala</strong>
+        </div>
 
-  <label class="check">
-    <input
-      id="gourmet"
-      type="checkbox"
-    >
+        <div class="property">
+            <small>Largura</small>
+            <strong>6,20 m</strong>
+        </div>
 
-    Área gourmet
-  </label>
+        <div class="property">
+            <small>Comprimento</small>
+            <strong>3,90 m</strong>
+        </div>
 
+        <div class="property">
+            <small>Área</small>
+            <strong>24,18 m²</strong>
+        </div>
 
-  <button id="generate">
-    ✨ GERAR CASA 3D
-  </button>
+        <div class="property">
+            <small>Tipo</small>
+            <strong>Residencial</strong>
+        </div>
 
+        <div class="property">
+            <small>Modo</small>
+            <strong>Projeto 3D</strong>
+        </div>
 
-  <button id="reset">
-    ↺ Resetar câmera
-  </button>
+    </aside>
 
-
-  <div id="status">
-    Pronto para gerar.
-  </div>
-
-</aside>
-
-
-<main id="view"></main>
-
-
-<div class="hint">
-  🖱️ Arraste para girar •
-  roda para zoom •
-  toque no celular
 </div>
 
 
-<script
-  type="module"
-  src="script.js">
+<div class="modal" id="aiModal">
+
+    <div class="modal-box">
+
+        <h2>✨ Criar arquitetura com IA</h2>
+
+        <p>
+            Descreva a casa que você deseja e a IA irá preparar a estrutura do projeto.
+        </p>
+
+        <textarea id="aiText"
+        placeholder="Ex: Quero uma casa moderna com 3 quartos, suíte, sala integrada com cozinha, 2 banheiros, lavanderia e garagem para 2 carros."></textarea>
+
+        <div class="modal-actions">
+
+            <button class="cancel" onclick="closeAI()">
+                Cancelar
+            </button>
+
+            <button class="generate" onclick="generateFromModal()">
+                Criar projeto
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function openAI(){
+    document.getElementById("aiModal").style.display="flex";
+}
+
+function closeAI(){
+    document.getElementById("aiModal").style.display="none";
+}
+
+function generateFromModal(){
+
+    const text=document.getElementById("aiText").value;
+
+    if(!text.trim()){
+        alert("Descreva a casa primeiro.");
+        return;
+    }
+
+    closeAI();
+
+    alert(
+        "IA recebeu seu projeto:\\n\\n"+
+        text+
+        "\\n\\nNa próxima etapa vamos conectar a IA real para gerar a planta automaticamente."
+    );
+}
+
+function generateAI(){
+
+    const text=document.getElementById("prompt").value;
+
+    if(!text.trim()){
+        openAI();
+        return;
+    }
+
+    document.getElementById("aiText").value=text;
+    generateFromModal();
+}
+
+function view2D(){
+
+    const room=document.getElementById("room");
+
+    room.style.transform=
+        "translate(-50%,-45%)";
+
+    room.style.boxShadow="0 15px 40px rgba(0,0,0,.4)";
+}
+
+function view3D(){
+
+    const room=document.getElementById("room");
+
+    room.style.transform=
+        "translate(-50%,-45%) perspective(1000px) rotateX(55deg) rotateZ(-1deg)";
+
+    room.style.boxShadow="0 30px 80px rgba(0,0,0,.5)";
+}
+
+function saveProject(){
+
+    localStorage.setItem(
+        "archia_project",
+        document.getElementById("workspace").innerHTML
+    );
+
+    alert("Projeto salvo neste dispositivo.");
+}
+
 </script>
 
 </body>
