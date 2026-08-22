@@ -3,159 +3,166 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gonçalves Arquitetura</title>
+
+  <title>ARQ IA 3D</title>
+
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<header class="topbar">
-  <div>
-    <strong>🏠 Gonçalves Arquitetura</strong>
-    <span id="projectName">Projeto sem nome</span>
+<header>
+  <div class="logo">
+    ARQ<span>IA</span> 3D
   </div>
 
-  <div class="top-actions">
-    <button id="newProject">Novo</button>
-    <button id="saveProject">Salvar</button>
-    <button id="exportProject">Exportar</button>
-  </div>
+  <button id="camera">
+    🎥 Visão externa
+  </button>
 </header>
 
-<main class="app">
 
-  <aside class="sidebar">
+<aside>
 
-    <h2>Montar</h2>
+  <h1>Monte sua casa</h1>
 
-    <button class="tool active" data-tool="select">
-      ↖ Selecionar
-    </button>
+  <p>
+    Configure o terreno e gere uma proposta
+    de arquitetura em 3D.
+  </p>
 
-    <button class="tool" data-tool="wall">
-      🧱 Parede
-    </button>
 
-    <button class="tool" data-tool="door">
-      🚪 Porta
-    </button>
+  <label>
+    Largura do terreno (m)
 
-    <button class="tool" data-tool="window">
-      🪟 Janela
-    </button>
+    <input
+      id="w"
+      type="number"
+      value="10"
+      min="4"
+      max="100"
+      step="0.5"
+    >
+  </label>
 
-    <button class="tool" data-tool="room">
-      ⬜ Cômodo
-    </button>
 
-    <button class="tool" data-tool="furniture">
-      🛋️ Móvel
-    </button>
+  <label>
+    Comprimento do terreno (m)
 
-    <h3>Projeto</h3>
+    <input
+      id="d"
+      type="number"
+      value="20"
+      min="5"
+      max="100"
+      step="0.5"
+    >
+  </label>
 
-    <label>
-      Nome
-      <input id="nameInput" value="Minha Casa">
-    </label>
 
-    <label>
-      Largura do terreno (m)
-      <input id="terrainW" type="number" value="10">
-    </label>
+  <label>
+    Quartos
 
-    <label>
-      Comprimento (m)
-      <input id="terrainH" type="number" value="20">
-    </label>
+    <input
+      id="q"
+      type="number"
+      value="3"
+      min="1"
+      max="8"
+    >
+  </label>
 
-    <button id="applyTerrain" class="primary">
-      Aplicar terreno
-    </button>
 
-    <div class="help">
-      <b>Como usar</b>
-      <p>
-        Escolha uma ferramenta e clique no desenho.
-        Para criar uma parede, arraste o mouse ou dedo.
-      </p>
-    </div>
+  <label>
+    Banheiros
 
-  </aside>
+    <input
+      id="b"
+      type="number"
+      value="2"
+      min="1"
+      max="5"
+    >
+  </label>
 
-  <section class="workspace">
 
-    <div class="toolbar">
-      <span id="toolLabel">Selecionar</span>
+  <label>
+    Garagem
 
-      <span>
-        Escala:
-        <b>1 m = 50 px</b>
-      </span>
+    <select id="g">
 
-      <button id="clearCanvas">
-        Limpar
-      </button>
-    </div>
+      <option value="0">
+        Sem garagem
+      </option>
 
-    <div class="canvas-wrap">
-      <canvas id="canvas"></canvas>
-    </div>
+      <option value="1" selected>
+        1 carro
+      </option>
 
-    <div class="status" id="status">
-      Pronto para começar.
-    </div>
+      <option value="2">
+        2 carros
+      </option>
 
-  </section>
+      <option value="3">
+        3 carros
+      </option>
 
-  <aside class="properties">
+    </select>
 
-    <h2>Propriedades</h2>
+  </label>
 
-    <div id="emptyProps">
-      <p>
-        Selecione um elemento para editar.
-      </p>
-    </div>
 
-    <div id="props" hidden>
+  <label class="check">
+    <input
+      id="pool"
+      type="checkbox"
+    >
 
-      <label>
-        Tipo
-        <input id="propType" disabled>
-      </label>
+    Piscina
+  </label>
 
-      <label>
-        X (m)
-        <input id="propX" type="number" step="0.1">
-      </label>
 
-      <label>
-        Y (m)
-        <input id="propY" type="number" step="0.1">
-      </label>
+  <label class="check">
+    <input
+      id="gourmet"
+      type="checkbox"
+    >
 
-      <label>
-        Largura (m)
-        <input id="propW" type="number" step="0.1">
-      </label>
+    Área gourmet
+  </label>
 
-      <label>
-        Altura (m)
-        <input id="propH" type="number" step="0.1">
-      </label>
 
-      <button id="deleteElement" class="danger">
-        Excluir elemento
-      </button>
+  <button id="generate">
+    ✨ GERAR CASA 3D
+  </button>
 
-    </div>
 
-  </aside>
+  <button id="reset">
+    ↺ Resetar câmera
+  </button>
 
-</main>
 
-<script src="app.js"></script>
+  <div id="status">
+    Pronto para gerar.
+  </div>
+
+</aside>
+
+
+<main id="view"></main>
+
+
+<div class="hint">
+  🖱️ Arraste para girar •
+  roda para zoom •
+  toque no celular
+</div>
+
+
+<script
+  type="module"
+  src="script.js">
+</script>
 
 </body>
 </html>
