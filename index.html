@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gonçalves Arquitetura</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="topbar">
+  <div>
+    <strong>🏠 Gonçalves Arquitetura</strong>
+    <span id="projectName">Projeto sem nome</span>
+  </div>
+
+  <div class="top-actions">
+    <button id="newProject">Novo</button>
+    <button id="saveProject">Salvar</button>
+    <button id="exportProject">Exportar</button>
+  </div>
+</header>
+
+<main class="app">
+
+  <aside class="sidebar">
+
+    <h2>Montar</h2>
+
+    <button class="tool active" data-tool="select">
+      ↖ Selecionar
+    </button>
+
+    <button class="tool" data-tool="wall">
+      🧱 Parede
+    </button>
+
+    <button class="tool" data-tool="door">
+      🚪 Porta
+    </button>
+
+    <button class="tool" data-tool="window">
+      🪟 Janela
+    </button>
+
+    <button class="tool" data-tool="room">
+      ⬜ Cômodo
+    </button>
+
+    <button class="tool" data-tool="furniture">
+      🛋️ Móvel
+    </button>
+
+    <h3>Projeto</h3>
+
+    <label>
+      Nome
+      <input id="nameInput" value="Minha Casa">
+    </label>
+
+    <label>
+      Largura do terreno (m)
+      <input id="terrainW" type="number" value="10">
+    </label>
+
+    <label>
+      Comprimento (m)
+      <input id="terrainH" type="number" value="20">
+    </label>
+
+    <button id="applyTerrain" class="primary">
+      Aplicar terreno
+    </button>
+
+    <div class="help">
+      <b>Como usar</b>
+      <p>
+        Escolha uma ferramenta e clique no desenho.
+        Para criar uma parede, arraste o mouse ou dedo.
+      </p>
+    </div>
+
+  </aside>
+
+  <section class="workspace">
+
+    <div class="toolbar">
+      <span id="toolLabel">Selecionar</span>
+
+      <span>
+        Escala:
+        <b>1 m = 50 px</b>
+      </span>
+
+      <button id="clearCanvas">
+        Limpar
+      </button>
+    </div>
+
+    <div class="canvas-wrap">
+      <canvas id="canvas"></canvas>
+    </div>
+
+    <div class="status" id="status">
+      Pronto para começar.
+    </div>
+
+  </section>
+
+  <aside class="properties">
+
+    <h2>Propriedades</h2>
+
+    <div id="emptyProps">
+      <p>
+        Selecione um elemento para editar.
+      </p>
+    </div>
+
+    <div id="props" hidden>
+
+      <label>
+        Tipo
+        <input id="propType" disabled>
+      </label>
+
+      <label>
+        X (m)
+        <input id="propX" type="number" step="0.1">
+      </label>
+
+      <label>
+        Y (m)
+        <input id="propY" type="number" step="0.1">
+      </label>
+
+      <label>
+        Largura (m)
+        <input id="propW" type="number" step="0.1">
+      </label>
+
+      <label>
+        Altura (m)
+        <input id="propH" type="number" step="0.1">
+      </label>
+
+      <button id="deleteElement" class="danger">
+        Excluir elemento
+      </button>
+
+    </div>
+
+  </aside>
+
+</main>
+
+<script src="app.js"></script>
+
+</body>
+</html>
